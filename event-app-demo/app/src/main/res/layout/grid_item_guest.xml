@@ -1,0 +1,36 @@
+<com.nandawperdana.eventappdemo.util.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="4dp"
+    android:background="@drawable/shape_guest"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:id="@+id/layout_laporan_gallery_add"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageview_grid_guest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textview_grid_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</com.nandawperdana.eventappdemo.util.SquareLayout>
