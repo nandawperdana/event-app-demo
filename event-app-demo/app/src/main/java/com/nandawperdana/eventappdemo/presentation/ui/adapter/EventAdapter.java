@@ -70,6 +70,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         TextView textView;
         @Bind(R.id.textview_row_event_subtitle)
         TextView textViewSubtitle;
+        @Bind(R.id.textview_row_event_desc)
+        TextView textViewDesc;
+        @Bind(R.id.textview_row_event_tags)
+        TextView textViewTags;
         EventAdapter mAdapter;
 
         public ViewHolder(View itemView, EventAdapter adapter) {
@@ -94,6 +98,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             Picasso.with(context)
                     .load(url)
                     .into(imageView);
+
+            if (data.getDesc() != null)
+                textViewDesc.setText(data.getDesc());
         }
 
         @OnClick(R.id.layout_row_event)

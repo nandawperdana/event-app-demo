@@ -15,7 +15,7 @@ public interface EventPresenter extends BasePresenter {
          */
         enum ViewState {
             IDLE, LOADING,
-            LOAD_EVENT, SHOW_EVENT, OPEN_MAIN, ERROR
+            LOAD_EVENT, SHOW_EVENT, OPEN_MAIN, SHOW_SCREEN_STATE, ERROR
         }
 
         /**

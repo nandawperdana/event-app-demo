@@ -30,6 +30,7 @@ public class GuestViewModel implements Serializable {
     }
 
     public void setListPeople() {
+        getListPeople().clear();
         for (PeopleModel item :
                 peopleDomain.getListPeople()) {
             getListPeople().add(item);

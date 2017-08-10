@@ -22,7 +22,7 @@ public class EventPresenterImpl implements EventPresenter {
                 mView.showState(EventView.ViewState.LOADING);
                 break;
             case LOAD_EVENT:
-                mView.showState(EventView.ViewState.LOAD_EVENT);
+                presentState(EventView.ViewState.LOADING);
                 presentState(EventView.ViewState.SHOW_EVENT);
                 break;
             case SHOW_EVENT:
@@ -30,6 +30,9 @@ public class EventPresenterImpl implements EventPresenter {
                 break;
             case OPEN_MAIN:
                 mView.showState(EventView.ViewState.OPEN_MAIN);
+                break;
+            case SHOW_SCREEN_STATE:
+                mView.showState(EventView.ViewState.SHOW_SCREEN_STATE);
                 break;
             case ERROR:
                 mView.showState(EventView.ViewState.ERROR);

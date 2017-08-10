@@ -1,15 +1,21 @@
 package com.nandawperdana.eventappdemo.api.people;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nandawperdana.eventappdemo.api.RootResponseModel;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by nandawperdana.
  */
-public class PeopleModel extends RootResponseModel implements Serializable {
+public class PeopleModel extends RealmObject implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -19,6 +25,26 @@ public class PeopleModel extends RootResponseModel implements Serializable {
     @SerializedName("birthdate")
     @Expose
     private String birthdate;
+
+    public PeopleModel() {
+    }
+
+    protected PeopleModel(Parcel in) {
+        name = in.readString();
+        birthdate = in.readString();
+    }
+
+    public static final Creator<PeopleModel> CREATOR = new Creator<PeopleModel>() {
+        @Override
+        public PeopleModel createFromParcel(Parcel in) {
+            return new PeopleModel(in);
+        }
+
+        @Override
+        public PeopleModel[] newArray(int size) {
+            return new PeopleModel[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -44,4 +70,14 @@ public class PeopleModel extends RootResponseModel implements Serializable {
         this.birthdate = birthdate;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(birthdate);
+    }
 }

@@ -2,9 +2,13 @@ package com.nandawperdana.eventappdemo.presentation.ui.screen.guest;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nandawperdana.eventappdemo.R;
@@ -18,10 +22,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class GuestActivity extends AppCompatActivity implements GuestPresenter.GuestView {
+public class GuestActivity extends AppCompatActivity implements GuestPresenter.GuestView, SwipeRefreshLayout.OnRefreshListener {
     // UI references.
     @Bind(R.id.recyclerview_guest)
     RecyclerView recyclerView;
+    @Bind(R.id.toolbar_guest)
+    Toolbar toolbar;
+    @Bind(R.id.swipe_guest)
+    SwipeRefreshLayout swipeRefreshLayout;
     GridLayoutManager gridLayoutManager;
     ProgressDialog progressDialog;
 
@@ -42,10 +50,15 @@ public class GuestActivity extends AppCompatActivity implements GuestPresenter.G
                 mPresenter.presentState(ViewState.OPEN_MAIN);
             }
         });
+
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void initLayout() {
         ButterKnife.bind(GuestActivity.this);
+
+        initToolbar(GuestActivity.this, toolbar);
 
         this.mPresenter = new GuestPresenterImpl(this);
         this.mModel = new GuestViewModel();
@@ -62,11 +75,36 @@ public class GuestActivity extends AppCompatActivity implements GuestPresenter.G
         mPresenter.presentState(ViewState.LOAD_GUEST);
     }
 
+    private void initToolbar(AppCompatActivity appCompatActivity, Toolbar toolbar) {
+        if (toolbar == null || appCompatActivity == null) {
+            throw new IllegalArgumentException("toolbar or appCompatActivity is null");
+        }
+        appCompatActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Guest");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     public void showProgress(boolean flag) {
-        if (flag)
-            progressDialog.show();
-        else progressDialog.dismiss();
+        swipeRefreshLayout.setRefreshing(flag);
     }
 
     @Override
@@ -115,5 +153,10 @@ public class GuestActivity extends AppCompatActivity implements GuestPresenter.G
     @Override
     public GuestViewModel doRetrieveModel() {
         return this.mModel;
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.presentState(ViewState.LOAD_GUEST);
     }
 }

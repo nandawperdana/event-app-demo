@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Mai
         } else {
             textViewName.setText("Nama: " + name);
             mPresenter.presentState(ViewState.LOADING);
+            if (istPalindrom(name.toCharArray())) {
+                showToast("isPalindrom");
+            } else showToast("not palindrom");
             doRetrieveModel().setScreenState(MainViewModel.ScreenState.STATE_NAME);
             mPresenter.presentState(ViewState.SHOW_SCREEN_STATE);
         }
@@ -247,7 +250,32 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Mai
         } else if (date % 2 == 0) {
             message = "BlackBerry";
         }
+
+        if (isPrime(date)) {
+            message = "is prime";
+        } else message = "not prime";
         showToast(message);
+    }
+
+    boolean isPrime(int n) {
+        for (int i = 2; 2 * i < n; i++) {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean istPalindrom(char[] word) {
+        int i1 = 0;
+        int i2 = word.length - 1;
+        while (i2 > i1) {
+            if (word[i1] != word[i2]) {
+                return false;
+            }
+            ++i1;
+            --i2;
+        }
+        return true;
     }
 }
 

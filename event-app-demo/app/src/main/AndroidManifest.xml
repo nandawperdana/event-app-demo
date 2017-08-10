@@ -3,6 +3,7 @@
     package="com.nandawperdana.eventappdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".AndroidApplication"
@@ -21,8 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.screen.event.EventActivity" />
-        <activity android:name=".presentation.ui.screen.guest.GuestActivity"></activity>
+        <activity android:name=".presentation.ui.screen.event.EventActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.ui.screen.main.MainActivity" />
+        </activity>
+        <activity android:name=".presentation.ui.screen.guest.GuestActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.ui.screen.main.MainActivity" />
+        </activity>
+        <!-- Goolge API Key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCdLaYeAXzHjE5ImMPWQIjN8GAJ9Lh8yAU" />
     </application>
 
 </manifest>
